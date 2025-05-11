@@ -27,7 +27,7 @@ public class WarehouseController : ControllerBase
         try
         {
             var newId = await _dbService.AddProductToWarehouseAsync(request);
-            return Ok(newId);
+            return Created("", newId); 
         }
         catch (Exception ex)
         {
@@ -46,7 +46,7 @@ public class WarehouseController : ControllerBase
         try
         {
             var newId = await _dbService.ExecuteStoredProcedureAsync(request);
-            return Ok(newId);
+            return Created("", newId); 
         }
         catch (SqlException ex)
         {
@@ -57,4 +57,5 @@ public class WarehouseController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+
 }

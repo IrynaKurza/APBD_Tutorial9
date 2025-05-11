@@ -1,22 +1,83 @@
 @Tutorial9_HostAddress = http://localhost:5027
 
-POST {{Tutorial9_HostAddress}}/api/warehouse
+### SUCCESS: insert with manual SQL logic
+POST http://localhost:5027/api/warehouse
 Content-Type: application/json
 
 {
-  "IdProduct": 999,
-  "IdWarehouse": 1,  
-  "Amount": 125,
-  "CreatedAt": "2025-05-11T14:30:00"
+  "idProduct": 101,
+  "idWarehouse": 201,
+  "amount": 5,
+  "createdAt": "2025-01-01T12:00:00"
 }
 
-###
-
-POST {{Tutorial9_HostAddress}}/api/warehouse/stored-procedure
+### SUCCESS: insert using stored procedure
+POST http://localhost:5027/api/warehouse/stored-procedure
 Content-Type: application/json
 
 {
-  "IdWarehouse": 1,
-  "Amount": 125,
-  "CreatedAt": "2025-05-11T14:30:00"
+  "idProduct": 101,
+  "idWarehouse": 201,
+  "amount": 5,
+  "createdAt": "2025-01-01T12:00:00"
+}
+
+
+### FAIL: non-existent product
+POST http://localhost:5027/api/warehouse
+Content-Type: application/json
+
+{
+  "idProduct": 999,
+  "idWarehouse": 201,
+  "amount": 5,
+  "createdAt": "2025-01-01T12:00:00"
+}
+
+
+### FAIL: non-existent warehouse
+POST http://localhost:5027/api/warehouse
+Content-Type: application/json
+
+{
+  "idProduct": 101,
+  "idWarehouse": 999,
+  "amount": 5,
+  "createdAt": "2025-01-01T12:00:00"
+}
+
+
+### FAIL: invalid amount (zero)
+POST http://localhost:5027/api/warehouse
+Content-Type: application/json
+
+{
+  "idProduct": 101,
+  "idWarehouse": 201,
+  "amount": 0,
+  "createdAt": "2025-01-01T12:00:00"
+}
+
+
+### FAIL: createdAt too early (no matching order)
+POST http://localhost:5027/api/warehouse
+Content-Type: application/json
+
+{
+  "idProduct": 101,
+  "idWarehouse": 201,
+  "amount": 5,
+  "createdAt": "2023-01-01T12:00:00"
+}
+
+
+### FAIL: order already fulfilled (simulate after inserting into Product_Warehouse)
+POST http://localhost:5027/api/warehouse
+Content-Type: application/json
+
+{
+  "idProduct": 101,
+  "idWarehouse": 201,
+  "amount": 5,
+  "createdAt": "2025-01-01T12:00:00"
 }
