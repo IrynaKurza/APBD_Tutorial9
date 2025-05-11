@@ -1,6 +1,22 @@
 @Tutorial9_HostAddress = http://localhost:5027
 
-GET {{Tutorial9_HostAddress}}/weatherforecast/
-Accept: application/json
+POST {{Tutorial9_HostAddress}}/api/warehouse
+Content-Type: application/json
+
+{
+  "IdProduct": 999,
+  "IdWarehouse": 1,  
+  "Amount": 125,
+  "CreatedAt": "2025-05-11T14:30:00"
+}
 
 ###
+
+POST {{Tutorial9_HostAddress}}/api/warehouse/stored-procedure
+Content-Type: application/json
+
+{
+  "IdWarehouse": 1,
+  "Amount": 125,
+  "CreatedAt": "2025-05-11T14:30:00"
+}
